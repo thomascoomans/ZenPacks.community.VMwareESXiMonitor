@@ -291,6 +291,15 @@ GAUGE
 True
 </property>
 </object>
+</object>
+<object id='memBalloon' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+GAUGE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+</object>
 <object id='memUsage' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -1267,6 +1276,66 @@ AVERAGE
 </object>
 </tomanycont>
 </object>
+<object id='Balloon' module='Products.ZenModel.GraphDefinition' class='GraphDefinition'>
+<property type="int" id="height" mode="w" >
+100
+</property>
+<property type="int" id="width" mode="w" >
+500
+</property>
+<property type="string" id="units" mode="w" >
+bytes
+</property>
+<property type="boolean" id="log" mode="w" >
+False
+</property>
+<property type="boolean" id="base" mode="w" >
+True
+</property>
+<property type="int" id="miny" mode="w" >
+-1
+</property>
+<property type="int" id="maxy" mode="w" >
+-1
+</property>
+<property type="boolean" id="hasSummary" mode="w" >
+True
+</property>
+<property type="long" id="sequence" mode="w" >
+5
+</property>
+<tomanycont id='graphPoints'>
+<object id='memBalloon' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<property type="long" id="sequence" mode="w" >
+0
+</property>
+<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
+AREA
+</property>
+<property type="long" id="lineWidth" mode="w" >
+1
+</property>
+<property type="boolean" id="stacked" mode="w" >
+False
+</property>
+<property type="string" id="format" mode="w" >
+%5.2lf%s
+</property>
+<property type="string" id="legend" mode="w" >
+Balloon Space Used
+</property>
+<property type="long" id="limit" mode="w" >
+-1
+</property>
+<property type="string" id="dpName" mode="w" >
+VMwareHost_memBalloon
+</property>
+<property type="string" id="cFunc" mode="w" >
+AVERAGE
+</property>
+</object>
+</tomanycont>
+</object>
 <object id='ESXiVM' module='Products.ZenModel.RRDTemplate' class='RRDTemplate'>
 <property type="string" id="targetPythonClass" mode="w" >
 ZenPacks.community.VMwareESXiMonitor.ESXiVM
@@ -2062,7 +2131,7 @@ True
 <object id='ESXi' module='Products.ZenEvents.EventClass' class='EventClass'>
 <property type="text" id="transform" mode="w" >
 if hasattr(evt, 'vmwVmDisplayName'):
-    evt.component = evt.vmwVmDisplayName
+evt.component = evt.vmwVmDisplayName
 </property>
 <tomanycont id='instances'>
 <object id='vmHBDetected' module='Products.ZenEvents.EventClassInst' class='EventClassInst'>
@@ -3213,11 +3282,11 @@ Release 5.0.x for VMware ESXi. The SNMPv1/v2c agent is a subsystem in the hostd 
 </object>
 <object id='vmwESX51x' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-Release 5.1.x for VMware ESXi supports SNMPv1, SNMPv2c, and SNMPv3 with a stand-alone snmpd process. 
-This agent supports read-only protocol operations. This implies that configuring the SNMPv3 Agent 
+Release 5.1.x for VMware ESXi supports SNMPv1, SNMPv2c, and SNMPv3 with a stand-alone snmpd process.
+This agent supports read-only protocol operations. This implies that configuring the SNMPv3 Agent
 can not be done via SET operations. Hence IETF standard SNMPv3 agent configuration mibs are not provided.
-SNMPv3 protocol is fully supported once configured via the CLI command interface (esxcli system snmp) 
-command set or host profiles. Lastly this SNMP agent provides one read-only view of 
+SNMPv3 protocol is fully supported once configured via the CLI command interface (esxcli system snmp)
+command set or host profiles. Lastly this SNMP agent provides one read-only view of
 the entire system to which all SNMPv3 users configured are assigned.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -3233,29 +3302,29 @@ capabilities
 current
 </property>
 <property type="string" id="description" mode="w" >
-Release 5.1.x for VMware ESXi supports SNMPv1, SNMPv2c, and SNMPv3 with a stand-alone snmpd process. 
-This agent supports read-only protocol operations. This implies that configuring the SNMPv3 Agent 
+Release 5.1.x for VMware ESXi supports SNMPv1, SNMPv2c, and SNMPv3 with a stand-alone snmpd process.
+This agent supports read-only protocol operations. This implies that configuring the SNMPv3 Agent
 can not be done via SET operations. Hence IETF standard SNMPv3 agent configuration mibs are not provided.
-SNMPv3 protocol is fully supported once configured via the CLI command interface (esxcli system snmp) 
-command set or host profiles. Lastly this SNMP agent provides one read-only view of 
+SNMPv3 protocol is fully supported once configured via the CLI command interface (esxcli system snmp)
+command set or host profiles. Lastly this SNMP agent provides one read-only view of
 the entire system to which all SNMPv3 users configured are assigned.
 </property>
 </object>
 <object id='vmwESX55' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-Release 5.5 for VMware ESXi supports SNMPv1, SNMPv2c, and SNMPv3 with a stand-alone snmpd process. 
+Release 5.5 for VMware ESXi supports SNMPv1, SNMPv2c, and SNMPv3 with a stand-alone snmpd process.
 
 This release features support for monitoring multiple IP Stacks. The standard IP-MIB, UDP-MIB, and TCP-MIB
-may be used with a context set to the IP Stack Name as found in ENTITY-MIB entLogicalTable 
+may be used with a context set to the IP Stack Name as found in ENTITY-MIB entLogicalTable
 or via command: esxcli network ip netstack list
 An example using net-snmp's snmpwalk command:: snmpwalk -v2c -n defaultTcpipStack ip
 
 No vDR instrumentation is yet available.
 
-This agent supports read-only protocol operations. This implies that configuring the SNMPv3 Agent 
+This agent supports read-only protocol operations. This implies that configuring the SNMPv3 Agent
 can not be done via SET operations. Hence IETF standard SNMPv3 agent configuration mibs are not provided.
-The SNMPv3 protocol is fully supported once configured via the CLI command interface (esxcli system snmp) 
-command set or vCenter Server host profiles. Lastly this SNMP agent provides one read-only view of 
+The SNMPv3 protocol is fully supported once configured via the CLI command interface (esxcli system snmp)
+command set or vCenter Server host profiles. Lastly this SNMP agent provides one read-only view of
 the entire system to which all SNMPv3 users configured are assigned.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -3271,19 +3340,19 @@ capabilities
 current
 </property>
 <property type="string" id="description" mode="w" >
-Release 5.5 for VMware ESXi supports SNMPv1, SNMPv2c, and SNMPv3 with a stand-alone snmpd process. 
+Release 5.5 for VMware ESXi supports SNMPv1, SNMPv2c, and SNMPv3 with a stand-alone snmpd process.
 
 This release features support for monitoring multiple IP Stacks. The standard IP-MIB, UDP-MIB, and TCP-MIB
-may be used with a context set to the IP Stack Name as found in ENTITY-MIB entLogicalTable 
+may be used with a context set to the IP Stack Name as found in ENTITY-MIB entLogicalTable
 or via command: esxcli network ip netstack list
 An example using net-snmp's snmpwalk command:: snmpwalk -v2c -n defaultTcpipStack ip
 
 No vDR instrumentation is yet available.
 
-This agent supports read-only protocol operations. This implies that configuring the SNMPv3 Agent 
+This agent supports read-only protocol operations. This implies that configuring the SNMPv3 Agent
 can not be done via SET operations. Hence IETF standard SNMPv3 agent configuration mibs are not provided.
-The SNMPv3 protocol is fully supported once configured via the CLI command interface (esxcli system snmp) 
-command set or vCenter Server host profiles. Lastly this SNMP agent provides one read-only view of 
+The SNMPv3 protocol is fully supported once configured via the CLI command interface (esxcli system snmp)
+command set or vCenter Server host profiles. Lastly this SNMP agent provides one read-only view of
 the entire system to which all SNMPv3 users configured are assigned.
 </property>
 </object>
@@ -3393,7 +3462,7 @@ node
 <tomanycont id='notifications'>
 <object id='vmwCimOmHeartbeat' module='Products.ZenModel.MibNotification' class='MibNotification'>
 <property id='zendoc' type='string'>
-This notification, if the agent is so configured, will be sent 
+This notification, if the agent is so configured, will be sent
 on a periodic basis to indicate cimom indication delivery is functioning.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -3409,7 +3478,7 @@ notification
 current
 </property>
 <property type="string" id="description" mode="w" >
-This notification, if the agent is so configured, will be sent 
+This notification, if the agent is so configured, will be sent
 on a periodic basis to indicate cimom indication delivery is functioning.
 </property>
 <property type="lines" id="objects" mode="w" >
@@ -3496,7 +3565,7 @@ notifyonly
 <property id='zendoc' type='string'>
 The identifying information of the entity (ie, the
 instance) for which this notification is generated. The
-property contains the CIM path of an CIM object instance, 
+property contains the CIM path of an CIM object instance,
 encoded as a string parameter - if the instance is modeled in the CIM
 Schema. If not a CIM instance, the property contains
 some identifying string that names the entity for which
@@ -3518,7 +3587,7 @@ current
 <property type="string" id="description" mode="w" >
 The identifying information of the entity (ie, the
 instance) for which this notification is generated. The
-property contains the CIM path of an CIM object instance, 
+property contains the CIM path of an CIM object instance,
 encoded as a string parameter - if the instance is modeled in the CIM
 Schema. If not a CIM instance, the property contains
 some identifying string that names the entity for which
@@ -3687,10 +3756,10 @@ status to ESX Operating System
 </object>
 <object id='vmwEnvEventTime' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-The time and date the underlying event was first 
-detected. May be set to the time the SNMP agent recieved the notification 
+The time and date the underlying event was first
+detected. May be set to the time the SNMP agent recieved the notification
 if in the incoming CIM indication the value is
-NULL due to the creating entity not being capable of providing 
+NULL due to the creating entity not being capable of providing
 this information. This value is based on the notion of
 local date and time of the Managed System Element
 generating the Indication.
@@ -3708,10 +3777,10 @@ scalar
 current
 </property>
 <property type="string" id="description" mode="w" >
-The time and date the underlying event was first 
-detected. May be set to the time the SNMP agent recieved the notification 
+The time and date the underlying event was first
+detected. May be set to the time the SNMP agent recieved the notification
 if in the incoming CIM indication the value is
-NULL due to the creating entity not being capable of providing 
+NULL due to the creating entity not being capable of providing
 this information. This value is based on the notion of
 local date and time of the Managed System Element
 generating the Indication.
@@ -4023,7 +4092,7 @@ readonly
 </object>
 <object id='vmwEnvPerceivedSeverity' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-An enumerated value that describes the severity of the 
+An enumerated value that describes the severity of the
 Alert Indication from the notifier's point of view.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -4039,7 +4108,7 @@ scalar
 current
 </property>
 <property type="string" id="description" mode="w" >
-An enumerated value that describes the severity of the 
+An enumerated value that describes the severity of the
 Alert Indication from the notifier's point of view.
 </property>
 <property type="string" id="access" mode="w" >
@@ -4119,7 +4188,7 @@ readonly
 </object>
 <object id='vmwEnvSysCreationClassName' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-The scoping System's CreationClassName for the Provider 
+The scoping System's CreationClassName for the Provider
 generating this Indication.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -4135,7 +4204,7 @@ scalar
 current
 </property>
 <property type="string" id="description" mode="w" >
-The scoping System's CreationClassName for the Provider 
+The scoping System's CreationClassName for the Provider
 generating this Indication.
 </property>
 <property type="string" id="access" mode="w" >
@@ -4413,9 +4482,9 @@ A hardware alert as received from the Common Infrastructure Management (CIM) sub
 </object>
 <object id='vmwESXEnvHardwareEvent' module='Products.ZenModel.MibNotification' class='MibNotification'>
 <property id='zendoc' type='string'>
-ESX Specific version of this notification, 
-if the agent is so configured, may be sent when 
-the ESX Operating System has detected a material change in 
+ESX Specific version of this notification,
+if the agent is so configured, may be sent when
+the ESX Operating System has detected a material change in
 physical condition of the hardware
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -4431,9 +4500,9 @@ notification
 deprecated
 </property>
 <property type="string" id="description" mode="w" >
-ESX Specific version of this notification, 
-if the agent is so configured, may be sent when 
-the ESX Operating System has detected a material change in 
+ESX Specific version of this notification,
+if the agent is so configured, may be sent when
+the ESX Operating System has detected a material change in
 physical condition of the hardware
 </property>
 <property type="lines" id="objects" mode="w" >
@@ -5676,7 +5745,7 @@ This trap is sent when a virtual machine is powered OFF.
 </object>
 <object id='vmPoweredOn' module='Products.ZenModel.MibNotification' class='MibNotification'>
 <property id='zendoc' type='string'>
-This trap is sent when a virtual machine is powered ON from a suspended 
+This trap is sent when a virtual machine is powered ON from a suspended
 or a powered off state.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -5692,7 +5761,7 @@ notification
 obsolete
 </property>
 <property type="string" id="description" mode="w" >
-This trap is sent when a virtual machine is powered ON from a suspended 
+This trap is sent when a virtual machine is powered ON from a suspended
 or a powered off state.
 </property>
 <property type="lines" id="objects" mode="w" >
@@ -5751,7 +5820,7 @@ This trap is sent when entity status changed.
 <object id='/zport/dmd/Mibs/mibs/VMWARE-PRODUCTS-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
 <property id='zendoc' type='string'>
 This MIB module provides the OID identifiers
-which are returned from SNMPv2-MIB sysObjectId for 
+which are returned from SNMPv2-MIB sysObjectId for
 agents in specific VMware products.
 </property>
 <property type="string" id="language" mode="w" >
@@ -5767,7 +5836,7 @@ Web: http://communities.vmware.com/community/developer/forums/managementapi
 </property>
 <property type="string" id="description" mode="w" >
 This MIB module provides the OID identifiers
-which are returned from SNMPv2-MIB sysObjectId for 
+which are returned from SNMPv2-MIB sysObjectId for
 agents in specific VMware products.
 </property>
 <tomanycont id='nodes'>
@@ -5867,7 +5936,7 @@ node
 <!-- ('', 'zport', 'dmd', 'Mibs', 'mibs', 'VMWARE-RESOURCES-MIB') -->
 <object id='/zport/dmd/Mibs/mibs/VMWARE-RESOURCES-MIB' module='Products.ZenModel.MibModule' class='MibModule'>
 <property id='zendoc' type='string'>
-This MIB module provides instrumentation of ESX Hypervisor resources such 
+This MIB module provides instrumentation of ESX Hypervisor resources such
 as cpu, memory, and disk.
 </property>
 <property type="string" id="language" mode="w" >
@@ -5882,7 +5951,7 @@ Fax: 650-427-5001
 Web: http://communities.vmware.com/community/developer/forums/managementapi
 </property>
 <property type="string" id="description" mode="w" >
-This MIB module provides instrumentation of ESX Hypervisor resources such 
+This MIB module provides instrumentation of ESX Hypervisor resources such
 as cpu, memory, and disk.
 </property>
 <tomanycont id='nodes'>
@@ -6112,7 +6181,7 @@ readonly
 </object>
 <object id='vmwHostBusAdapterTable' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-Inventory of Host Bus Adatpers found in this system. 
+Inventory of Host Bus Adatpers found in this system.
 CLI: esxcfg-scsidevs -a
 VIM Parent Container: https://esx.example.com/mob/?moid=storageSystem
 VIM property: hostBusAdapter
@@ -6131,7 +6200,7 @@ table
 current
 </property>
 <property type="string" id="description" mode="w" >
-Inventory of Host Bus Adatpers found in this system. 
+Inventory of Host Bus Adatpers found in this system.
 CLI: esxcfg-scsidevs -a
 VIM Parent Container: https://esx.example.com/mob/?moid=storageSystem
 VIM property: hostBusAdapter
@@ -6146,7 +6215,7 @@ vmwMemSize. The result is the amount of memory available to VMs and to
 the hypervisor.
 
 To get a more accurate view of memory available to VMs the following property
-represents the amount of resources available for the root resource pool for running 
+represents the amount of resources available for the root resource pool for running
 virtual machines.
 
 VIM property: effectiveMemory
@@ -6171,7 +6240,7 @@ vmwMemSize. The result is the amount of memory available to VMs and to
 the hypervisor.
 
 To get a more accurate view of memory available to VMs the following property
-represents the amount of resources available for the root resource pool for running 
+represents the amount of resources available for the root resource pool for running
 virtual machines.
 
 VIM property: effectiveMemory
@@ -7418,7 +7487,7 @@ readonly
 <object id='vmwProdPatch' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
 This identifier represents the patch level applied to this system.
-VIM Property: None. 
+VIM Property: None.
 CLI: esxcli system version get
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -7435,7 +7504,7 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 This identifier represents the patch level applied to this system.
-VIM Property: None. 
+VIM Property: None.
 CLI: esxcli system version get
 </property>
 <property type="string" id="access" mode="w" >
@@ -9847,7 +9916,7 @@ noaccess
 <object id='vmwFdName' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
 File or Device that this device is connected to, example /dev/fd0.
-VIM Property: Virtual Device's with index of 8000-8999. 
+VIM Property: Virtual Device's with index of 8000-8999.
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
 If no backing was defined by operator, string will start with W:
 If unavailable, string will start with E:r
@@ -9866,7 +9935,7 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 File or Device that this device is connected to, example /dev/fd0.
-VIM Property: Virtual Device's with index of 8000-8999. 
+VIM Property: Virtual Device's with index of 8000-8999.
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
 If no backing was defined by operator, string will start with W:
 If unavailable, string will start with E:r
@@ -10161,7 +10230,7 @@ readonly
 </object>
 <object id='vmwVmConfigFilePath' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-This is the path to the config file of the affected vm generating the trap 
+This is the path to the config file of the affected vm generating the trap
 and is same as vmwVmTable vmwVmConfigFile. It is expressed as POSIX pathname.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -10177,7 +10246,7 @@ scalar
 current
 </property>
 <property type="string" id="description" mode="w" >
-This is the path to the config file of the affected vm generating the trap 
+This is the path to the config file of the affected vm generating the trap
 and is same as vmwVmTable vmwVmConfigFile. It is expressed as POSIX pathname.
 </property>
 <property type="string" id="access" mode="w" >
@@ -10187,7 +10256,7 @@ notifyonly
 <object id='vmwVmCpus' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
 Number of virtual CPUs assigned to this virtual machine.
-VIM Property: numCPU 
+VIM Property: numCPU
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -10204,7 +10273,7 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 Number of virtual CPUs assigned to this virtual machine.
-VIM Property: numCPU 
+VIM Property: numCPU
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
 </property>
 <property type="string" id="access" mode="w" >
@@ -10261,11 +10330,11 @@ Identifies a registered VM on this ESX system.
 Operating system running on this vm. This value corresponds to the
 value specified when creating the VM and unless set correctly may differ
 from the actual OS running. Will return one of the values if set in order:
-  Vim.Vm.GuestInfo.guestFullName
-  Vim.Vm.GuestInfo.guestId
-  Vim.Vm.GuestInfo.guestFamily
-MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=guest 
-     where moid = vmwVmIdx.
+Vim.Vm.GuestInfo.guestFullName
+Vim.Vm.GuestInfo.guestId
+Vim.Vm.GuestInfo.guestFamily
+MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=guest
+where moid = vmwVmIdx.
 If VMware Tools is not running, value will be of form 'E: error message'
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -10284,11 +10353,11 @@ current
 Operating system running on this vm. This value corresponds to the
 value specified when creating the VM and unless set correctly may differ
 from the actual OS running. Will return one of the values if set in order:
-  Vim.Vm.GuestInfo.guestFullName
-  Vim.Vm.GuestInfo.guestId
-  Vim.Vm.GuestInfo.guestFamily
-MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=guest 
-     where moid = vmwVmIdx.
+Vim.Vm.GuestInfo.guestFullName
+Vim.Vm.GuestInfo.guestId
+Vim.Vm.GuestInfo.guestFamily
+MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=guest
+where moid = vmwVmIdx.
 If VMware Tools is not running, value will be of form 'E: error message'
 </property>
 <property type="string" id="access" mode="w" >
@@ -10356,7 +10425,7 @@ Uniquely identifies a given virtual machine host bus adapter.
 </object>
 <object id='vmwVmHbaIdx' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-Uniquely identifies a given Host Bus adapter in this VM. May 
+Uniquely identifies a given Host Bus adapter in this VM. May
 change across system reboots.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -10372,7 +10441,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Uniquely identifies a given Host Bus adapter in this VM. May 
+Uniquely identifies a given Host Bus adapter in this VM. May
 change across system reboots.
 </property>
 <property type="string" id="access" mode="w" >
@@ -10539,7 +10608,7 @@ readonly
 </object>
 <object id='vmwVmMemSize' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-Memory configured for this virtual machine. 
+Memory configured for this virtual machine.
 Memory &gt; MAX Integer32 is reported as max integer32.
 VIM Property: memoryMB
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
@@ -10557,7 +10626,7 @@ column
 current
 </property>
 <property type="string" id="description" mode="w" >
-Memory configured for this virtual machine. 
+Memory configured for this virtual machine.
 Memory &gt; MAX Integer32 is reported as max integer32.
 VIM Property: memoryMB
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
@@ -10660,7 +10729,7 @@ noaccess
 <object id='vmwVmNetName' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
 What this virutal nic is connected to such as a virtual switch portgroup identifier.
-VIM Property: Virtual Device's with index of 4000-4999. 
+VIM Property: Virtual Device's with index of 4000-4999.
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
 then select property 'backing' to how this nic connects.
 If no backing was defined by operator, string will start with W:
@@ -10680,7 +10749,7 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 What this virutal nic is connected to such as a virtual switch portgroup identifier.
-VIM Property: Virtual Device's with index of 4000-4999. 
+VIM Property: Virtual Device's with index of 4000-4999.
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
 then select property 'backing' to how this nic connects.
 If no backing was defined by operator, string will start with W:
@@ -10693,7 +10762,7 @@ readonly
 <object id='vmwVmNetNum' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
 The name of the device as it appears in the VM Settings.
-VIM Property: Virtual Device's with index of 4000-4999. 
+VIM Property: Virtual Device's with index of 4000-4999.
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -10710,7 +10779,7 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 The name of the device as it appears in the VM Settings.
-VIM Property: Virtual Device's with index of 4000-4999. 
+VIM Property: Virtual Device's with index of 4000-4999.
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config%2ehardware
 </property>
 <property type="string" id="access" mode="w" >
@@ -10789,7 +10858,7 @@ readonly
 </object>
 <object id='vmwVmTable' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-A table containing information on virtual machines that have been 
+A table containing information on virtual machines that have been
 configured on the system.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -10805,16 +10874,16 @@ table
 current
 </property>
 <property type="string" id="description" mode="w" >
-A table containing information on virtual machines that have been 
+A table containing information on virtual machines that have been
 configured on the system.
 </property>
 </object>
 <object id='vmwVmUUID' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
 A unique identifier for this VM. Must be unique across a set of ESX systems
-managed by an instance of vSphere Center. 
+managed by an instance of vSphere Center.
 Example value: 564d95d4-bff7-31fd-f20f-db2d808a8b32
-VIM Property: uuid 
+VIM Property: uuid
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -10831,9 +10900,9 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 A unique identifier for this VM. Must be unique across a set of ESX systems
-managed by an instance of vSphere Center. 
+managed by an instance of vSphere Center.
 Example value: 564d95d4-bff7-31fd-f20f-db2d808a8b32
-VIM Property: uuid 
+VIM Property: uuid
 MOB: https://esx.example.com/mob/?moid=vmwVmIdx&amp;doPath=config
 </property>
 <property type="string" id="access" mode="w" >
@@ -10842,7 +10911,7 @@ readonly
 </object>
 <object id='vmwVmVMID' module='Products.ZenModel.MibNode' class='MibNode'>
 <property id='zendoc' type='string'>
-No longer provided, use vmwVmIdx. See vmwVmUUID for cross system, 
+No longer provided, use vmwVmIdx. See vmwVmUUID for cross system,
 unique, persistent identifier.
 </property>
 <property type="string" id="moduleName" mode="w" >
@@ -10858,7 +10927,7 @@ column
 obsolete
 </property>
 <property type="string" id="description" mode="w" >
-No longer provided, use vmwVmIdx. See vmwVmUUID for cross system, 
+No longer provided, use vmwVmIdx. See vmwVmUUID for cross system,
 unique, persistent identifier.
 </property>
 <property type="string" id="access" mode="w" >
@@ -10899,8 +10968,8 @@ poll the vmwVmTable to obtain current status.
 <object id='vmwVmHBLost' module='Products.ZenModel.MibNotification' class='MibNotification'>
 <property id='zendoc' type='string'>
 This trap is sent when a virtual machine detects a loss in guest heartbeat. The Guest heartbeat
-is only sent if VMware Tools are installed in the Guest OS. Control process will send this event whenever it 
-determines the number of guest heartbeats for a given period of time have not been received. 
+is only sent if VMware Tools are installed in the Guest OS. Control process will send this event whenever it
+determines the number of guest heartbeats for a given period of time have not been received.
 Upon receiving this notification client applications should
 poll the vmwVmTable to obtain current status.
 </property>
@@ -10918,8 +10987,8 @@ current
 </property>
 <property type="string" id="description" mode="w" >
 This trap is sent when a virtual machine detects a loss in guest heartbeat. The Guest heartbeat
-is only sent if VMware Tools are installed in the Guest OS. Control process will send this event whenever it 
-determines the number of guest heartbeats for a given period of time have not been received. 
+is only sent if VMware Tools are installed in the Guest OS. Control process will send this event whenever it
+determines the number of guest heartbeats for a given period of time have not been received.
 Upon receiving this notification client applications should
 poll the vmwVmTable to obtain current status.
 </property>
@@ -10958,9 +11027,9 @@ poll the vmwVmTable to obtain current status.
 </object>
 <object id='vmwVmPoweredOn' module='Products.ZenModel.MibNotification' class='MibNotification'>
 <property id='zendoc' type='string'>
-This trap is sent when a virtual machine is powered on from a suspended 
+This trap is sent when a virtual machine is powered on from a suspended
 or a powered off state. The origin of this event can be several:
-for instance may be operator initiated, existing vmx process reconnects to control subsystem. 
+for instance may be operator initiated, existing vmx process reconnects to control subsystem.
 NOTE: vms powered up due to VMotion are not reported. Upon receiving this notification client applications should
 poll the vmwVmTable to obtain current status.
 </property>
@@ -10977,9 +11046,9 @@ notification
 current
 </property>
 <property type="string" id="description" mode="w" >
-This trap is sent when a virtual machine is powered on from a suspended 
+This trap is sent when a virtual machine is powered on from a suspended
 or a powered off state. The origin of this event can be several:
-for instance may be operator initiated, existing vmx process reconnects to control subsystem. 
+for instance may be operator initiated, existing vmx process reconnects to control subsystem.
 NOTE: vms powered up due to VMotion are not reported. Upon receiving this notification client applications should
 poll the vmwVmTable to obtain current status.
 </property>
