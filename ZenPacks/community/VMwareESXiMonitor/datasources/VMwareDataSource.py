@@ -69,7 +69,7 @@ class VMwareDataSource(ZenPackPersistence, RRDDataSource.SimpleRRDDataSource):
     def addDataPoints(self):
         datastore = ['diskFreeSpace','connectionStatus']
         guest = ['memUsage','memOverhead','memConsumed','diskUsage','cpuUsageMin','cpuUsageMax','cpuUsageAvg','cpuUsage','adminStatus','operStatus']
-        host = ['sysUpTime','memUsage','memSwapused','memGranted','memActive','diskUsage','cpuUsageMin','cpuUsageMax','cpuUsageAvg','cpuUsage','cpuReservedcapacity','netReceived','netTransmitted','netPacketsRx','netPacketsTx','netDroppedRx','netDroppedTx']
+        host = ['sysUpTime','memUsage','memSwapused','memGranted','memActive','diskUsage','cpuUsageMin','cpuUsageMax','cpuUsageAvg','cpuUsage','cpuReservedcapacity','netReceived','netTransmitted','netPacketsRx','netPacketsTx','netDroppedRx','netDroppedTx', 'memTotal', 'memBalloon']
 
         if self.id == "VMwareDatastore":
             self.performanceSource = "VMwareDatastore"
@@ -146,7 +146,7 @@ class VMwareDataSource(ZenPackPersistence, RRDDataSource.SimpleRRDDataSource):
                 if REQUEST.has_key('createCmd'):
                     datapoint.createCmd = REQUEST['createCmd']
 
-    #this method gets the command that will be run with zencommand    
+    #this method gets the command that will be run with zencommand
     def getCommand(self, context):
         if self.performanceSource == "VMwareDatastore":
             cmd = vmwareDatastorePerfTemplate
