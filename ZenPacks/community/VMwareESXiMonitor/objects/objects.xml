@@ -291,7 +291,6 @@ GAUGE
 True
 </property>
 </object>
-</object>
 <object id='memBalloon' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
